@@ -1,0 +1,916 @@
+/* ============================================ */
+/* استایل حرفه‌ای گلدن تاچ – فروشگاه افغانستان  */
+/* ============================================ */
+
+/* وارد کردن فونت‌های حرفه‌ای */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600;700;800;900&family=Bodoni+Moda:wght@400;500;600;700;800;900&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Vazirmatn', 'Poppins', sans-serif;
+  background-color: #050505;
+  color: #e8e8e8;
+  overflow-x: hidden;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* اسکرول بار سفارشی */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4AF37;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #AA7C1F;
+}
+
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  background: rgba(5, 5, 5, 0.75);
+  backdrop-filter: blur(3px);
+}
+
+/* Header - شیشه‌ای لوکس */
+.header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+/* لوگوی تصویری Golden Touch */
+.logo {
+  display: inline-block;
+  text-decoration: none;
+}
+.logo-img {
+  height: 60px;
+  width: 60px;
+  display: block;
+  transition: all 0.3s ease;
+  border-radius: 50%;           /* گرد کامل */
+  background: transparent;
+  object-fit: cover;            /* تصویر داخل دایره را خوب بچیند */
+  border: 1px solid rgba(212, 175, 55, 0.3);  /* حاشیه طلایی نرم */
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
+  border-color: #D4AF37;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+/* برای موبایل */
+@media (max-width: 768px) {
+  .logo-img {
+    height: 45px;
+  }
+}
+/* بخش فارسی "لمس طلایی" */
+.logo .persian {
+  font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  background: linear-gradient(135deg, #F3E5AB, #D4AF37, #AA7C1F);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+/* بخش انگلیسی "GOLDEN TOUCH" */
+.logo .english {
+  font-family: 'Bodoni Moda', 'Didot', 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  background: linear-gradient(135deg, #FFF8E7, #D4AF37, #F3E5AB, #D4AF37);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.logo:hover .english {
+  letter-spacing: 6px;
+  transform: scale(1.02);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  color: #ddd;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #D4AF37, #F3E5AB);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a:hover {
+  color: #D4AF37;
+}
+
+.cart-icon {
+  position: relative;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.cart-icon:hover {
+  transform: scale(1.1);
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -12px;
+  background: #D4AF37;
+  color: #000;
+  font-size: 0.7rem;
+  font-weight: 800;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* هیرو سکشن با درخشش */
+.hero {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.hero h1 {
+  font-size: 5rem;
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(135deg, #FFF8E7, #D4AF37, #F3E5AB, #D4AF37);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transform: translateY(50px);
+  margin-bottom: 1rem;
+  letter-spacing: 5px;
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero p {
+  font-size: 1.1rem;
+  letter-spacing: 8px;
+  margin-top: 0.5rem;
+  opacity: 0;
+  transform: translateY(30px);
+  color: #D4AF37;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #D4AF37;
+  font-size: 0.75rem;
+  animation: bounce 2s infinite;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.scroll-hint:hover {
+  opacity: 1;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+/* تایتل سکشن */
+.section-title {
+  text-align: center;
+  font-size: 2.2rem;
+  margin: 3rem 0 2rem;
+  font-family: 'Playfair Display', serif;
+  opacity: 0;
+  transform: translateY(30px);
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #D4AF37, #F3E5AB, #D4AF37, transparent);
+}
+
+.section-title span {
+  color: #D4AF37;
+  font-weight: 700;
+}
+
+/* گرید محصولات */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.product-card {
+  background: rgba(20, 20, 20, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  transform: translateY(50px);
+  opacity: 0;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  border-color: #D4AF37;
+  box-shadow: 0 25px 40px rgba(212, 175, 55, 0.15);
+}
+
+/* ویدیو کانتینر */
+.video-container {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.video-thumbnail {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.video-container:hover .video-thumbnail {
+  transform: scale(1.05);
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 65px;
+  height: 65px;
+  background: rgba(212, 175, 55, 0.95);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+.play-button::after {
+  content: '▶';
+  font-size: 26px;
+  color: #000;
+  margin-left: 5px;
+}
+
+.video-container:hover .play-button {
+  transform: translate(-50%, -50%) scale(1.15);
+  background: #D4AF37;
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+}
+
+.actual-video {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: none;
+}
+
+/* اطلاعات محصول */
+.product-info {
+  padding: 1.3rem;
+}
+
+.product-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+.product-description {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.product-stock {
+  font-size: 0.75rem;
+  color: #D4AF37;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.product-price {
+  color: #D4AF37;
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin: 0.5rem 0;
+  font-family: 'Poppins', monospace;
+}
+
+.add-to-cart {
+  width: 100%;
+  background: linear-gradient(135deg, #D4AF37, #AA7C1F);
+  border: none;
+  padding: 0.7rem;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+.add-to-cart:hover:not(:disabled) {
+  background: linear-gradient(135deg, #E5C158, #B8860B);
+  transform: scale(1.02);
+  box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+}
+
+.add-to-cart:disabled {
+  background: #444;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* سبد خرید */
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.cart-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 500px;
+  max-width: 95%;
+  height: 100%;
+  background: #0a0a0a;
+  border-left: 2px solid #D4AF37;
+  z-index: 201;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  overflow-y: auto;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+.cart-sidebar.open {
+  transform: translateX(0);
+}
+
+.cart-overlay.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #D4AF37;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.cart-header h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  color: #D4AF37;
+}
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 35vh;
+}
+
+.cart-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #222;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.cart-item-img {
+  width: 65px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.cart-item-details {
+  flex: 1;
+}
+
+.cart-item-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.cart-item-price {
+  color: #D4AF37;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.cart-item-quantity {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  margin-top: 0.4rem;
+}
+
+.quantity-btn {
+  background: #D4AF37;
+  border: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.quantity-btn:hover:not(:disabled) {
+  background: #AA7C1F;
+  transform: scale(1.05);
+}
+
+.quantity-btn:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+
+.remove-item {
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+}
+
+.remove-item:hover {
+  color: #ff4444;
+  transform: scale(1.1);
+}
+
+/* بخش ارسال و تخفیف */
+.shipping-section, .discount-section {
+  margin: 1rem 0;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #D4AF37;
+}
+
+.province-select, .discount-input {
+  width: 100%;
+  padding: 0.7rem;
+  background: #1a1a1a;
+  border: 1px solid #D4AF37;
+  border-radius: 12px;
+  color: white;
+  margin-top: 0.3rem;
+  font-family: 'Vazirmatn', sans-serif;
+  font-size: 0.85rem;
+}
+
+.discount-btn {
+  width: 100%;
+  margin-top: 0.6rem;
+  background: #D4AF37;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.2s;
+}
+
+.discount-btn:hover {
+  background: #AA7C1F;
+}
+
+/* جمع‌ها */
+.cart-total, .shipping-cost, .discount-amount, .grand-total {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.6rem 0;
+  padding: 0.4rem 0;
+  font-size: 0.95rem;
+}
+
+.grand-total {
+  border-top: 2px solid #D4AF37;
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+/* روش‌های پرداخت */
+.payment-methods {
+  margin: 1rem 0;
+}
+
+.payment-methods h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.payment-option {
+  display: block;
+  margin: 0.6rem 0;
+  cursor: pointer;
+  padding: 0.6rem;
+  border-radius: 12px;
+  transition: background 0.2s;
+  font-size: 0.9rem;
+}
+
+.payment-option:hover {
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.payment-option input {
+  margin-left: 0.6rem;
+  accent-color: #D4AF37;
+}
+
+/* باکس‌های اطلاعات پرداخت */
+.payment-info-box {
+  margin: 0.8rem 0;
+  transition: all 0.3s ease;
+}
+
+.card-image-container, .qr-container {
+  text-align: center;
+  margin-top: 0.8rem;
+}
+
+.bank-card-img {
+  max-width: 100%;
+  border-radius: 16px;
+  border: 1px solid #D4AF37;
+  background: #1a1a1a;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.qr-code-img {
+  width: 140px;
+  height: 140px;
+  border-radius: 16px;
+  border: 2px solid #D4AF37;
+  background: white;
+  padding: 6px;
+}
+
+.finalize-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #D4AF37, #AA7C1F);
+  border: none;
+  padding: 0.9rem;
+  font-weight: 800;
+  font-size: 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 1.2rem;
+  transition: all 0.3s;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+.finalize-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+}
+
+.copy-btn-small {
+  background: #D4AF37;
+  border: none;
+  padding: 0.2rem 0.8rem;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  margin-right: 0.5rem;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.copy-btn-small:hover {
+  background: #AA7C1F;
+  color: white;
+}
+
+/* واتساپ ثابت */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  transition: all 0.3s;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+/* فوتر */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  margin-top: 3rem;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+/* ========== ریسپانسیو موبایل ========== */
+@media (max-width: 768px) {
+  .header {
+    padding: 0.8rem 1.2rem;
+  }
+  
+  .logo {
+    font-size: 1.3rem;
+  }
+  
+  .nav-links {
+    gap: 1rem;
+  }
+  
+  .nav-links a {
+    font-size: 0.8rem;
+  }
+  
+  .hero h1 {
+    font-size: 2.2rem;
+    letter-spacing: 3px;
+  }
+  
+  .hero p {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+  }
+  
+  .section-title {
+    font-size: 1.6rem;
+  }
+  
+  .section-title::after {
+    width: 50px;
+    bottom: -8px;
+  }
+  
+  .product-grid {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+    gap: 1.5rem;
+  }
+  
+  .video-thumbnail, .actual-video {
+    height: 280px;
+  }
+  
+  .play-button {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .play-button::after {
+    font-size: 20px;
+  }
+  
+  .cart-sidebar {
+    width: 100%;
+    padding: 1rem;
+  }
+  
+  .whatsapp-float {
+    bottom: 15px;
+    left: 15px;
+  }
+  
+  .whatsapp-float img {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .product-title {
+    font-size: 1rem;
+  }
+  
+  .product-price {
+    font-size: 1.1rem;
+  }
+  
+  .qr-code-img {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+/* موبایل خیلی کوچک */
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  
+  .section-title {
+    font-size: 1.4rem;
+  }
+  
+  .product-info {
+    padding: 1rem;
+  }
+  
+  .cart-item-img {
+    width: 50px;
+    height: 60px;
+  }
+  
+  .cart-item-title {
+    font-size: 0.8rem;
+  }
+  
+  .quantity-btn {
+    width: 22px;
+    height: 22px;
+    font-size: 0.7rem;
+  }
+}
+/* فرم اطلاعات خریدار */
+.customer-info {
+  margin: 1rem 0;
+  padding: 0.8rem;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 16px;
+}
+
+.customer-input {
+  width: 100%;
+  padding: 0.7rem;
+  margin: 0.4rem 0;
+  background: #1a1a1a;
+  border: 1px solid #D4AF37;
+  border-radius: 12px;
+  color: white;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+.customer-input:focus {
+  outline: none;
+  border-color: #F3E5AB;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+}
+
+/* انیمیشن پیام‌ها */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.notification {
+  animation: slideInRight 0.3s ease;
+}
+
+.notification-close:hover {
+  opacity: 0.7;
+}
