@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <title>Golden Touch | فروشگاه آنلاین لباس</title>
+  
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+      }
+    }
+  </script>
+</head>
+<body>
+
+<div id="canvas-container"></div>
+
+<div class="content">
+  <header class="header">
+  <a href="#" class="logo">
+    <img src="logo.png" alt="Golden Touch" class="logo-img">
+  </a>
+  <div class="nav-links">
+    <a href="#">خانه</a>
+    <a href="#products">محصولات</a>
+    <div class="cart-icon" id="cartIcon">
+      🛒
+      <span class="cart-count" id="cartCount">0</span>
+    </div>
+  </div>
+</header>
+
+  <div class="hero">
+    <h1>GOLDEN TOUCH</h1>
+    <p>لباس‌های لوکس زنانه</p>
+    <div class="scroll-hint">↓ اسکرول کنید ↓</div>
+  </div>
+
+  <section id="products">
+    <h2 class="section-title">مجموعه <span>طلایی</span></h2>
+    <div class="product-grid" id="productGrid"></div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2026 Golden Touch — ارسال به سراسر افغانستان</p>
+    <p style="margin-top:0.5rem;">پشتیبانی واتساپ: <strong id="whatsappNumber">0781474031</strong> <button class="copy-btn-small" onclick="copyText('0781474031')">کپی</button></p>
+  </footer>
+</div>
+
+<!-- سبد خرید کامل -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>سبد خرید</h3>
+    <button id="closeCart" style="background:none; border:none; color:white; font-size:1.5rem;">✕</button>
+  </div>
+  
+  <div class="cart-items" id="cartItemsList">
+    <p style="text-align:center;">سبد خرید خالی است</p>
+  </div>
+  
+  <!-- انتخاب استان برای محاسبه پست -->
+  <div class="shipping-section" id="shippingSection" style="display:none;">
+    <label style="color:#D4AF37;">استان محل سکونت:</label>
+    <select id="provinceSelect" class="province-select">
+      <option value="kabul">کابل - ۵۰؋</option>
+      <option value="herat">هرات - ۱۰۰؋</option>
+      <option value="mazar">مزار شریف - ۱۰۰؋</option>
+      <option value="kandahar">قندهار - ۱۲۰؋</option>
+      <option value="other">سایر ولایات - ۱۵۰؋</option>
+    </select>
+  </div>
+  
+  <!-- کد تخفیف -->
+  <div class="discount-section" style="display:none;">
+    <input type="text" id="discountCode" placeholder="کد تخفیف" class="discount-input">
+    <button id="applyDiscount" class="discount-btn">اعمال</button>
+    <p id="discountMessage" style="font-size:0.7rem; color:#D4AF37;"></p>
+  </div>
+  
+  <div class="cart-total">
+    <span>مجموع</span>
+    <span id="cartTotalPrice">۰؋</span>
+  </div>
+  <div class="shipping-cost" style="display:none;">
+    <span>هزینه ارسال</span>
+    <span id="shippingCost">۰؋</span>
+  </div>
+  <div class="discount-amount" style="display:none;">
+    <span>تخفیف</span>
+    <span id="discountAmount">-۰؋</span>
+  </div>
+  <div class="grand-total" style="font-size:1.2rem; font-weight:bold;">
+    <span>قابل پرداخت</span>
+    <span id="grandTotal">۰؋</span>
+  </div>
+  
+  <!-- ========== فرم اطلاعات خریدار (جدید) ========== -->
+  <div class="customer-info" id="customerInfoSection" style="display:none;">
+    <h4 style="color:#D4AF37; margin:0.5rem 0;">اطلاعات شما</h4>
+    <input type="text" id="customerName" placeholder="نام" class="customer-input">
+    <input type="text" id="customerLastName" placeholder="تخلص" class="customer-input">
+    <input type="text" id="customerWhatsapp" placeholder="شماره واتساپ (مثال: 937XXXXXXXX)" class="customer-input">
+    <p style="font-size:0.7rem; color:#aaa;">شماره واتساپ باید با 93 شروع شود</p>
+  </div>
+  
+  <!-- روش‌های پرداخت -->
+  <div class="payment-methods">
+    <h4 style="color:#D4AF37; margin:0.5rem 0;">روش پرداخت</h4>
+    <label class="payment-option">
+      <input type="radio" name="paymentMethod" value="online_bank" checked> پرداخت آنلاین (انتقال به حساب بانکی)
+    </label>
+    <label class="payment-option">
+      <input type="radio" name="paymentMethod" value="online_pi"> پرداخت آنلاین (کیف پول Pi Network)
+    </label>
+    <label class="payment-option">
+      <input type="radio" name="paymentMethod" value="cod"> پرداخت حضوری (درب منزل)
+    </label>
+  </div>
+  
+  <!-- اطلاعات بانکی (عزیزی بانک) -->
+  <div id="bankInfo" class="payment-info-box">
+    <div style="background:#0a0a0a; padding:0.8rem; border-radius:12px; margin:0.5rem 0;">
+      <p style="color:#D4AF37; font-weight:bold;">🏦 عزیزی بانک / Azizi Bank</p>
+      <p>شماره حساب: <strong>۰۱۲۳-۴۵۶۷-۸۹۱۰-۱۱۱۱</strong> <button class="copy-btn-small" onclick="copyText('0123-4567-8910-1111')">کپی</button></p>
+      <p>نام صاحب حساب: <strong>Golden Touch Store</strong></p>
+      <p>کد Swift: <strong>AZIZIAFXXXX</strong></p>
+      <div class="card-image-container">
+        <img id="bankCardImage" src="https://placehold.co/400x250/1a1a1a/D4AF37?text=Azizi+Bank+Card" alt="کارت عزیزی بانک" class="bank-card-img">
+      </div>
+    </div>
+  </div>
+  
+  <!-- اطلاعات پی نتورک (Pi Network) -->
+  <div id="piInfo" class="payment-info-box" style="display:none;">
+    <div style="background:#0a0a0a; padding:0.8rem; border-radius:12px; margin:0.5rem 0;">
+      <p style="color:#D4AF37; font-weight:bold;">π کیف پول Pi Network</p>
+      <p>آدرس پی: <strong>GABC123...XYZ</strong> <button class="copy-btn-small" onclick="copyText('GABC123...XYZ')">کپی</button></p>
+      <div class="qr-container">
+        <img id="piQrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=GABC123...XYZ" alt="QR کد پی" class="qr-code-img">
+      </div>
+    </div>
+  </div>
+  
+  <button id="finalizeOrderBtn" class="finalize-btn">✅ نهایی کردن خرید</button>
+</div>
+
+<!-- واتساپ ثابت -->
+<a href="https://wa.me/937XXXXXXX" id="whatsappFloat" class="whatsapp-float" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="50" height="50" alt="WhatsApp">
+</a>
+
+<script src="main.js"></script>
+
+<!-- دیتای محصولات (فقط همین قسمت را ویرایش کنید) -->
+<script>
+  const productsData = [
+    { 
+      id: 1, 
+      name: "لباس شب ابریشمی طلایی", 
+      price: 29900,
+      description: "مناسب مجالس خاص و مهمانی‌های لوکس",
+      thumbnail: "first.png?w=600",
+      video: "first.mp4",
+      stock: 5
+    },
+    { 
+      id: 2, 
+      name: "لباس کوکتل طلایی", 
+      price: 24900,
+      description: "استایل مدرن و شیک برای دورهمی‌ها",
+      thumbnail: "second.png?w=600",
+      video: "second.mp4",
+      stock: 3
+    },
+    { 
+      id: 3, 
+      name: "مانتو مخمل طلایی", 
+      price: 17900,
+      description: "مانتو شیک مخملی مناسب فصل پاییز و زمستان",
+      thumbnail: "third.png?w=600",
+      video: "third.mp4",
+      stock: 7
+    },
+    { 
+      id: 4, 
+      name: "ست دو تکه طلایی", 
+      price: 19900,
+      description: "ست دو تکه شامل بلوز و شلوار، مناسب مهمانی‌های نیمه رسمی",
+      thumbnail: "fifth.png?w=600",
+      video: "fifth.mp4",
+      stock: 4
+    },
+    { 
+      id: 5, 
+      name: "لباس عروس طلایی و سفید", 
+      price: 59900,
+      description: "لباس عروس ویژه با تزئینات طلایی",
+      thumbnail: "eighth.png?w=600",
+      video: "eighth.mp4",
+      stock: 2
+    },
+    { 
+      id: 6, 
+      name: "شومیز طلایی براق", 
+      price: 8900,
+      description: "شومیز براق طلایی برای استایل روز و شب",
+      thumbnail: "sixth.png?w=600",
+      video: "sixth.mp4",
+      stock: 8
+    }
+  ];
+</script>
+
+<script>
+  // ============================================
+  // تنظیمات اولیه (شما اینجا اطلاعات خود را وارد کنید)
+  // ============================================
+  
+  // شماره واتساپ پشتیبانی
+  window.whatsappNumber = "0781474031";
+  
+  // اطلاعات عزیزی بانک (جایگزین کنید)
+  window.bankAccount = {
+    accountNumber: "۰۱۲۳-۴۵۶۷-۸۹۱۰-۱۱۱۱",
+    accountName: "Golden Touch Store",
+    swiftCode: "AZIZIAFXXXX",
+    cardImage: "https://placehold.co/400x250/1a1a1a/D4AF37?text=Azizi+Bank+Card"
+  };
+  
+  // اطلاعات پی نتورک (جایگزین کنید)
+  window.piWallet = {
+    address: "GABC123...XYZ",
+    qrData: "GABC123...XYZ"
+  };
+  
+  // توکن ربات تلگرام (اختیاری - بعداً وارد کنید)
+  window.telegramBotToken = "";
+  window.telegramChatId = "";
+  
+  // هزینه ارسال بر اساس استان (شما مقادیر را ویرایش کنید)
+  window.shippingCosts = {
+    kabul: 50,
+    herat: 100,
+    mazar: 100,
+    kandahar: 120,
+    other: 150
+  };
+  
+  // کدهای تخفیف معتبر (شما اضافه کنید)
+  window.validDiscountCodes = {
+    "GOLDEN10": 10,
+    "WELCOME20": 20
+  };
+  
+  // اجرای سایت
+  initWebsite(productsData);
+</script>
+</body>
+</html>
